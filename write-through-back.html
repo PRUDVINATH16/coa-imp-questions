@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 - Q6: Write-Through vs. Write-Back & Write Buffer</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f6ff;
+    color: #1a2a4a;
+    line-height: 1.6;
+    padding: 24px;
+  }
+  .card {
+    max-width: 900px;
+    margin: 0 auto 24px auto;
+    background: #ffffff;
+    border: 1px solid #c8dcff;
+    border-radius: 10px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 14px rgba(0, 80, 200, 0.08);
+  }
+  h1 {
+    font-size: 1.5rem;
+    color: #0047b3;
+    border-bottom: 3px solid #0047b3;
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+  h2 {
+    font-size: 1.1rem;
+    color: #0059d6;
+    margin: 20px 0 8px 0;
+  }
+  h3 {
+    font-size: 1rem;
+    color: #0047b3;
+    margin: 14px 0 6px 0;
+  }
+  p { margin-bottom: 10px; }
+  ul { margin: 8px 0 12px 22px; }
+  li { margin-bottom: 6px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.92rem;
+  }
+  th {
+    background: #0047b3;
+    color: #ffffff;
+    padding: 10px 12px;
+    text-align: left;
+    border: 1px solid #003580;
+  }
+  td {
+    padding: 10px 12px;
+    border: 1px solid #c8dcff;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f5f9ff; }
+  .answer-box {
+    background: #eaf2ff;
+    border: 1px solid #9fc0f0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 18px;
+    font-weight: 600;
+    color: #0047b3;
+  }
+  .exam-tip {
+    background: #fffbe6;
+    border: 1px solid #ffe08a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: #6b5200;
+  }
+  .note { font-size: 0.85rem; color: #3a5a8a; font-style: italic; margin-top: 10px; }
+  .highlight { background: #d6e6ff; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Q6. Write-Through vs. Write-Back Cache Policies & Write Buffer (5 Marks)</h1>
+
+  <h2>1. Write-Through Policy</h2>
+  <ul>
+    <li>On a write hit, the cache block <strong>and main memory are updated simultaneously</strong>.</li>
+    <li><strong>Data consistency:</strong> High — main memory always holds the latest value.</li>
+    <li><strong>Memory traffic:</strong> High — every write goes to main memory, even if the same block is written repeatedly (e.g., inside a loop).</li>
+    <li><strong>Performance:</strong> Lower — frequent memory writes slow down execution. Simple to implement.</li>
+  </ul>
+
+  <h2>2. Write-Back Policy</h2>
+  <ul>
+    <li>On a write hit, only the cache block is updated and a <strong>dirty (modified) bit</strong> is set.</li>
+    <li>The block is written to main memory only when it is <strong>replaced</strong> (evicted) from the cache.</li>
+    <li><strong>Data consistency:</strong> Temporarily lower — main memory may hold stale data until the dirty block is written back. The dirty bit tracks this.</li>
+    <li><strong>Memory traffic:</strong> Low — multiple writes to the same block result in only one memory write (on eviction).</li>
+    <li><strong>Performance:</strong> Higher — writes occur at cache speed, and memory bandwidth is saved.</li>
+  </ul>
+
+  <h2>3. Comparison Table</h2>
+  <table>
+    <tr>
+      <th>Parameter</th>
+      <th>Write-Through</th>
+      <th>Write-Back</th>
+    </tr>
+    <tr>
+      <td><strong>Data Consistency</strong></td>
+      <td>High (memory always current)</td>
+      <td>Lower (memory may be stale until eviction)</td>
+    </tr>
+    <tr>
+      <td><strong>Memory Traffic</strong></td>
+      <td>High (every write goes to memory)</td>
+      <td>Low (writes only on block replacement)</td>
+    </tr>
+    <tr>
+      <td><strong>Performance</strong></td>
+      <td>Lower</td>
+      <td>Higher</td>
+    </tr>
+    <tr>
+      <td><strong>Implementation</strong></td>
+      <td>Simple</td>
+      <td>Needs dirty bit</td>
+    </tr>
+  </table>
+
+  <h2>4. Role of a Write Buffer</h2>
+  <ul>
+    <li>In a <strong>write-through</strong> cache, every write goes to slow main memory. If the CPU waits for each write to complete, performance drops.</li>
+    <li>A <strong>write buffer</strong> is a small <strong>FIFO queue</strong> between the cache and main memory.</li>
+    <li>The CPU places the write request in the buffer and <strong>immediately continues execution</strong>; the buffer sends the data to main memory later.</li>
+    <li><strong>Read requests get priority.</strong> If a read address matches an entry in the write buffer, the data is read from the buffer (not stale main memory).</li>
+    <li>In a <strong>write-back</strong> cache, a write buffer temporarily holds the dirty block while the new block is fetched, so the CPU does not wait for the write-back.</li>
+  </ul>
+
+  <div class="answer-box">
+    ✅ Summary: Write-through is simple and ensures high consistency but generates high memory traffic. Write-back is faster and generates less traffic but needs a dirty bit. A write buffer hides the latency of write-through writes, allowing the CPU to continue without waiting for main memory.
+  </div>
+
+  <div class="exam-tip">
+    <strong>Exam Tip:</strong> Always draw the comparison table. It is the fastest way to score marks on this question.
+  </div>
+
+  <p class="note">Reference: M3.pdf, Pages 31–32 and M3.ppt, Pages 45–54 — "Write Policies" and "Write Buffer".</p>
+</div>
+
+</body>
+</html>

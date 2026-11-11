@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 - Exam Notes Index</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f6ff;
+    color: #1a2a4a;
+    line-height: 1.6;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  h1 {
+    font-size: 2rem;
+    color: #0047b3;
+    margin-bottom: 8px;
+  }
+  .header p {
+    color: #3a5a8a;
+    font-size: 1.1rem;
+  }
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+  }
+  .card {
+    background: #ffffff;
+    border: 1px solid #c8dcff;
+    border-radius: 10px;
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 80, 200, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #0047b3;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: bottom;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 80, 200, 0.12);
+    border-color: #9fc0f0;
+  }
+  .card:hover::before {
+    transform: scaleY(1);
+  }
+  .card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+  .card h2 {
+    font-size: 1.15rem;
+    color: #0047b3;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 0.9rem;
+    color: #5a7aa0;
+    margin: 0;
+  }
+  .footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #8a9fbf;
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Module 3: Memory System Organization</h1>
+    <p>Exam-Ready Notes & Problem Solutions</p>
+  </div>
+
+  <div class="grid-container">
+    
+    <!-- 1. Memory Interleaving -->
+    <a href="memory-interleaving.html" class="card">
+      <div class="card-icon">🔀</div>
+      <h2>Memory Interleaving</h2>
+      <p>Need for interleaving, addressing techniques, and block transfer calculation.</p>
+    </a>
+
+    <!-- 2. Moore's Law -->
+    <a href="moores-law.html" class="card">
+      <div class="card-icon">📈</div>
+      <h2>Moore's Law & Performance Gap</h2>
+      <p>Processor-DRAM gap and why memory becomes a bottleneck.</p>
+    </a>
+
+    <!-- 3. Cache Mapping -->
+    <a href="cache-mapping-techniques.html" class="card">
+      <div class="card-icon">🗺️</div>
+      <h2>Cache Mapping Techniques</h2>
+      <p>Direct, Associative, and Set-Associative mapping with examples.</p>
+    </a>
+
+    <!-- 4. Write Policies -->
+    <a href="write-through-back.html" class="card">
+      <div class="card-icon">✍️</div>
+      <h2>Write-Through & Write-Back</h2>
+      <p>Cache write policies, memory traffic, and the role of a write buffer.</p>
+    </a>
+
+    <!-- 5. Cache Problems -->
+    <a href="cache-problems.html" class="card">
+      <div class="card-icon">🧮</div>
+      <h2>Cache Numerical Problems</h2>
+      <p>AMAT, Speedup calculations, and Tag/Index/Offset bit calculations.</p>
+    </a>
+
+    <!-- 6. Secondary Storage -->
+    <a href="secondary-storage.html" class="card">
+      <div class="card-icon">💽</div>
+      <h2>Secondary Storage & RAID</h2>
+      <p>Magnetic disk structure, access time, and RAID levels (0, 1, 5).</p>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <p>Click on any topic to open the exam-ready notes.</p>
+  </div>
+
+</body>
+</html>

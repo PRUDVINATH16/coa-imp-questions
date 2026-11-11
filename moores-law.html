@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 - Q2: Processor-DRAM Gap & Moore's Law</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f6ff;
+    color: #1a2a4a;
+    line-height: 1.6;
+    padding: 24px;
+  }
+  .card {
+    max-width: 900px;
+    margin: 0 auto 24px auto;
+    background: #ffffff;
+    border: 1px solid #c8dcff;
+    border-radius: 10px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 14px rgba(0, 80, 200, 0.08);
+  }
+  h1 {
+    font-size: 1.5rem;
+    color: #0047b3;
+    border-bottom: 3px solid #0047b3;
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+  h2 {
+    font-size: 1.1rem;
+    color: #0059d6;
+    margin: 20px 0 8px 0;
+  }
+  p { margin-bottom: 10px; }
+  ul { margin: 8px 0 12px 22px; }
+  li { margin-bottom: 6px; }
+  .formula {
+    background: #e6f0ff;
+    border-left: 5px solid #0047b3;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    border-radius: 4px;
+  }
+  .diagram-box {
+    background: #f5f9ff;
+    border: 1px dashed #7aa7e8;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 14px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    white-space: pre;
+    overflow-x: auto;
+    color: #003580;
+  }
+  .highlight { background: #d6e6ff; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+  .answer-box {
+    background: #eaf2ff;
+    border: 1px solid #9fc0f0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 18px;
+    font-weight: 600;
+    color: #0047b3;
+  }
+  .exam-tip {
+    background: #fffbe6;
+    border: 1px solid #ffe08a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: #6b5200;
+  }
+  .note { font-size: 0.85rem; color: #3a5a8a; font-style: italic; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Q2. Processor-DRAM Performance Gap & Moore's Law (5 Marks)</h1>
+
+  <h2>1. Moore's Law</h2>
+  <ul>
+    <li>Moore's Law states that the number of transistors on a chip doubles approximately every <strong>1.5 to 2 years</strong>.</li>
+    <li>This has led to rapid improvements in <strong>processor performance</strong> over time.</li>
+  </ul>
+
+  <h2>2. The Widening Performance Gap</h2>
+  <p>The performance of processors and DRAM has not grown at the same rate:</p>
+  <div class="diagram-box">
+Processor Performance:  grows ~60% per year  (2x every 1.5 years)
+DRAM Performance:       grows ~ 9% per year  (2x every 10 years)
+
+          Processor  ─────────────────────────►  (Fast growth)
+             Gap widens by ~50% per year
+          DRAM       ────►                        (Slow growth)
+  </div>
+
+  <ul>
+    <li>Because the processor improves much faster than DRAM, the <strong>performance gap grows by approximately 50% every year</strong>.</li>
+    <li>This means the CPU can process data much faster than the main memory can supply it.</li>
+  </ul>
+
+  <h2>3. Why Memory is a Bottleneck</h2>
+  <ul>
+    <li>Even a sophisticated processor may perform well below its potential unless supported by a matching memory system.</li>
+    <li>The processor often remains idle while waiting for instructions and data from slow main memory.</li>
+    <li>This is often illustrated as a <strong>"horse pulling an overloaded cart"</strong> — the fast processor (horse) is held back by the slow memory (heavy cart).</li>
+    <li>The solution is the <strong>memory hierarchy</strong> (cache, virtual memory, interleaving) to hide this gap and make memory appear faster.</li>
+  </ul>
+
+  <div class="answer-box">
+    ✅ Conclusion: Due to Moore's Law, processor performance grows much faster than DRAM performance, creating a widening performance gap. This makes main memory a system bottleneck, which is addressed through the memory hierarchy and cache memory.
+  </div>
+
+  <div class="exam-tip">
+    <strong>Exam Tip:</strong> In the exam, draw two simple lines on a graph: a steep line for "Processor" and a shallow line for "DRAM". Label the gap between them as "Performance Gap (grows ~50%/year)". This diagram alone earns marks.
+  </div>
+
+  <p class="note">Reference: M3.ppt, Pages 3–5 — "Widening Performance Gap" and "An Unbalanced System".</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 - Q7 & Q8: AMAT Numerical Solutions</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f6ff;
+    color: #1a2a4a;
+    line-height: 1.6;
+    padding: 24px;
+  }
+  .card {
+    max-width: 950px;
+    margin: 0 auto 28px auto;
+    background: #ffffff;
+    border: 1px solid #c8dcff;
+    border-radius: 10px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 14px rgba(0, 80, 200, 0.08);
+  }
+  h1 {
+    font-size: 1.5rem;
+    color: #0047b3;
+    border-bottom: 3px solid #0047b3;
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+  h2 {
+    font-size: 1.1rem;
+    color: #0059d6;
+    margin: 20px 0 8px 0;
+  }
+  h3 {
+    font-size: 1rem;
+    color: #0047b3;
+    margin: 14px 0 6px 0;
+  }
+  p { margin-bottom: 10px; }
+  ul { margin: 8px 0 12px 22px; }
+  li { margin-bottom: 6px; }
+  .formula {
+    background: #e6f0ff;
+    border-left: 5px solid #0047b3;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    white-space: pre-wrap;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.92rem;
+  }
+  th {
+    background: #0047b3;
+    color: #ffffff;
+    padding: 10px 12px;
+    text-align: left;
+    border: 1px solid #003580;
+  }
+  td {
+    padding: 10px 12px;
+    border: 1px solid #c8dcff;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f5f9ff; }
+  .answer-box {
+    background: #eaf2ff;
+    border: 1px solid #9fc0f0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 18px;
+    font-weight: 600;
+    color: #0047b3;
+  }
+  .exam-tip {
+    background: #fffbe6;
+    border: 1px solid #ffe08a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: #6b5200;
+  }
+  .note { font-size: 0.85rem; color: #3a5a8a; font-style: italic; margin-top: 10px; }
+  .highlight { background: #d6e6ff; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- ================= QUESTION 7 ================= -->
+<div class="card">
+  <h1>Q7. AMAT for Read and Write Requests (Write-Through, 5 Marks)</h1>
+
+  <h2>Given Data</h2>
+  <ul>
+    <li>Cache access time (\(C\)) = <strong>50 ns</strong></li>
+    <li>Main memory access time (\(M\)) = <strong>300 ns</strong></li>
+    <li>Read requests = 75% (0.75); Write requests = 25% (0.25)</li>
+    <li>Read hit ratio (\(h\)) = <strong>0.8</strong></li>
+    <li>Write-through scheme: cache and main memory updated in <strong>parallel</strong></li>
+  </ul>
+
+  <h2>Step 1: AMAT for Read Requests</h2>
+  <p>On a hit, only cache is accessed. On a miss, cache is checked, then main memory is accessed.</p>
+  <div class="formula">
+T_read = h × C + (1 − h) × (C + M)
+T_read = 0.8 × 50 + 0.2 × (50 + 300)
+T_read = 40 + 0.2 × 350
+T_read = 40 + 70
+T_read = 110 ns
+  </div>
+
+  <h2>Step 2: AMAT for Write Requests</h2>
+  <p>In write-through with parallel updating, the cache and main memory are written simultaneously. The CPU must wait for the slower of the two (main memory), since main memory is the bottleneck unless a write buffer is used.</p>
+  <div class="formula">
+T_write = M = 300 ns
+  </div>
+
+  <h2>Step 3: Overall AMAT</h2>
+  <div class="formula">
+T_avg = (0.75 × T_read) + (0.25 × T_write)
+T_avg = (0.75 × 110) + (0.25 × 300)
+T_avg = 82.5 + 75
+T_avg = 157.5 ns
+  </div>
+
+  <div class="answer-box">
+    ✅ Final Answer:<br>
+    AMAT for Reads = <strong>110 ns</strong><br>
+    AMAT for Writes = <strong>300 ns</strong><br>
+    Overall AMAT = <strong>157.5 ns</strong>
+  </div>
+
+  <div class="exam-tip">
+    <strong>Exam Tip:</strong> State the assumption clearly: "In write-through without a write buffer, the write time equals main memory access time because the CPU waits for memory to complete." This secures full marks.
+  </div>
+
+  <p class="note">Reference: M3.pdf, Pages 52–54 — "Average Memory Access Time" and "Impact of Cache".</p>
+</div>
+
+<!-- ================= QUESTION 8 ================= -->
+<div class="card">
+  <h1>Q8. AMAT and Speedup due to Cache (5 Marks)</h1>
+
+  <h2>Given Data</h2>
+  <ul>
+    <li>Hit ratio (\(h\)) = <strong>0.75</strong></li>
+    <li>Cache access time (\(C\)) = <strong>10 ns</strong></li>
+    <li>Main memory access time (\(M\)) = <strong>110 ns</strong></li>
+  </ul>
+
+  <h2>Step 1: Average Memory Access Time (AMAT)</h2>
+  <div class="formula">
+AMAT = h × C + (1 − h) × (C + M)
+AMAT = 0.75 × 10 + 0.25 × (10 + 110)
+AMAT = 7.5 + 0.25 × 120
+AMAT = 7.5 + 30
+AMAT = 37.5 ns
+  </div>
+
+  <h2>Step 2: Time Without Cache</h2>
+  <p>Without cache, every access goes to main memory:</p>
+  <div class="formula">
+T_without = M = 110 ns
+  </div>
+
+  <h2>Step 3: Speedup</h2>
+  <div class="formula">
+Speedup = T_without / T_with
+Speedup = 110 / 37.5
+Speedup ≈ 2.93
+  </div>
+
+  <div class="answer-box">
+    ✅ Final Answer:<br>
+    AMAT = <strong>37.5 ns</strong><br>
+    Speedup ≈ <strong>2.93×</strong> (cache makes memory access about 2.93 times faster)
+  </div>
+
+  <div class="exam-tip">
+    <strong>Exam Tip:</strong> Always state the formula first. Show the substitution clearly. The speedup is a simple ratio — do not overcomplicate it.
+  </div>
+
+  <p class="note">Reference: M3.pdf, Pages 51–54 — "Hit Rate and Miss Penalty" and "Average Memory Access Time".</p>
+</div>
+
+</body>
+</html>

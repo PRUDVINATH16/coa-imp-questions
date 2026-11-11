@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 - Q3: Cache Memory & Mapping Techniques</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f6ff;
+    color: #1a2a4a;
+    line-height: 1.6;
+    padding: 24px;
+  }
+  .card {
+    max-width: 900px;
+    margin: 0 auto 24px auto;
+    background: #ffffff;
+    border: 1px solid #c8dcff;
+    border-radius: 10px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 14px rgba(0, 80, 200, 0.08);
+  }
+  h1 {
+    font-size: 1.5rem;
+    color: #0047b3;
+    border-bottom: 3px solid #0047b3;
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+  h2 {
+    font-size: 1.1rem;
+    color: #0059d6;
+    margin: 20px 0 8px 0;
+  }
+  h3 {
+    font-size: 1rem;
+    color: #0047b3;
+    margin: 14px 0 6px 0;
+  }
+  p { margin-bottom: 10px; }
+  ul { margin: 8px 0 12px 22px; }
+  li { margin-bottom: 6px; }
+  .formula {
+    background: #e6f0ff;
+    border-left: 5px solid #0047b3;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    border-radius: 4px;
+  }
+  .diagram-box {
+    background: #f5f9ff;
+    border: 1px dashed #7aa7e8;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 14px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    white-space: pre;
+    overflow-x: auto;
+    color: #003580;
+  }
+  .highlight { background: #d6e6ff; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+  .answer-box {
+    background: #eaf2ff;
+    border: 1px solid #9fc0f0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 18px;
+    font-weight: 600;
+    color: #0047b3;
+  }
+  .exam-tip {
+    background: #fffbe6;
+    border: 1px solid #ffe08a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: #6b5200;
+  }
+  .note { font-size: 0.85rem; color: #3a5a8a; font-style: italic; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Q3. Cache Memory & Mapping Techniques (5 Marks)</h1>
+
+  <h2>1. What is Cache Memory?</h2>
+  <ul>
+    <li>Cache is a small, fast memory placed between the processor and main memory.</li>
+    <li>It exists because the processor is much faster than main memory, causing the CPU to remain idle while waiting for data.</li>
+    <li>It stores <strong>frequently or recently used data/instructions</strong>, exploiting <strong>locality of reference</strong> (temporal and spatial).</li>
+    <li>On a memory access, the CPU checks the cache first: <strong>Hit</strong> → data from cache; <strong>Miss</strong> → block fetched from main memory into cache, then supplied to CPU.</li>
+  </ul>
+
+  <h2>2. Mapping Techniques</h2>
+  <p>Mapping functions determine how memory blocks are placed in the cache.</p>
+
+  <h3>(a) Direct Mapping</h3>
+  <ul>
+    <li>Each main-memory block maps to <strong>exactly one</strong> cache block.</li>
+    <li><strong>Rule:</strong> Cache Block = Memory Block mod Number of Cache Blocks.</li>
+    <li><strong>Address fields:</strong> <span class="highlight">Tag | Block | Word</span></li>
+    <li><strong>Advantage:</strong> Simple and inexpensive to implement.</li>
+    <li><strong>Disadvantage:</strong> Multiple blocks may compete for the same cache location (conflicts), causing frequent replacements even if the cache is not full.</li>
+  </ul>
+
+  <h3>(b) Associative (Fully Associative) Mapping</h3>
+  <ul>
+    <li>A memory block can be placed in <strong>any</strong> cache block.</li>
+    <li><strong>Address fields:</strong> <span class="highlight">Tag | Word</span></li>
+    <li><strong>Operation:</strong> The tag is compared with the tags of all cache blocks using a <strong>parallel associative search</strong>.</li>
+    <li><strong>Advantage:</strong> Complete flexibility, better utilization of cache space, fewer conflicts.</li>
+    <li><strong>Disadvantage:</strong> Higher hardware cost (comparators for every block).</li>
+  </ul>
+
+  <h3>(c) Set-Associative Mapping</h3>
+  <ul>
+    <li>Cache blocks are grouped into <strong>sets</strong>. A memory block maps to <strong>one specific set</strong> but can occupy <strong>any of the \(k\) positions</strong> within that set.</li>
+    <li><strong>\(k\)-way set-associative:</strong> each set contains \(k\) cache blocks.</li>
+    <li><strong>Address fields:</strong> <span class="highlight">Tag | Set | Word</span></li>
+    <li><strong>Advantage:</strong> Combines the low cost of direct mapping with the flexibility of associative mapping. The tag is compared with only \(k\) blocks per set.</li>
+  </ul>
+
+  <div class="diagram-box">
+Direct:          [ Tag | Block | Word ]
+Associative:     [ Tag | Word ]
+Set-Associative: [ Tag | Set   | Word ]
+  </div>
+
+  <h2>3. Best Trade-off</h2>
+  <div class="answer-box">
+    ✅ Set-Associative mapping provides the best trade-off between hit ratio and implementation cost. It reduces the conflict misses of direct mapping while avoiding the high hardware cost of a full associative search. It gives medium flexibility at a medium cost.
+  </div>
+
+  <div class="exam-tip">
+    <strong>Exam Tip:</strong> For each technique, write the mapping rule and the address field format. This is the easiest way to score full marks.
+  </div>
+
+  <p class="note">Reference: M3.pdf, Pages 32–36 — "Cache Mapping" and "Cache Address Fields".</p>
+</div>
+
+</body>
+</html>

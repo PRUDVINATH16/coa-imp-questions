@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 - Q9: Magnetic Disks & RAID</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f6ff;
+    color: #1a2a4a;
+    line-height: 1.6;
+    padding: 24px;
+  }
+  .card {
+    max-width: 950px;
+    margin: 0 auto 28px auto;
+    background: #ffffff;
+    border: 1px solid #c8dcff;
+    border-radius: 10px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 14px rgba(0, 80, 200, 0.08);
+  }
+  h1 {
+    font-size: 1.5rem;
+    color: #0047b3;
+    border-bottom: 3px solid #0047b3;
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+  h2 {
+    font-size: 1.1rem;
+    color: #0059d6;
+    margin: 20px 0 8px 0;
+  }
+  h3 {
+    font-size: 1rem;
+    color: #0047b3;
+    margin: 14px 0 6px 0;
+  }
+  p { margin-bottom: 10px; }
+  ul { margin: 8px 0 12px 22px; }
+  li { margin-bottom: 6px; }
+  .formula {
+    background: #e6f0ff;
+    border-left: 5px solid #0047b3;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    white-space: pre-wrap;
+  }
+  .diagram-box {
+    background: #f5f9ff;
+    border: 1px dashed #7aa7e8;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 14px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    white-space: pre;
+    overflow-x: auto;
+    color: #003580;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.92rem;
+  }
+  th {
+    background: #0047b3;
+    color: #ffffff;
+    padding: 10px 12px;
+    text-align: left;
+    border: 1px solid #003580;
+  }
+  td {
+    padding: 10px 12px;
+    border: 1px solid #c8dcff;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f5f9ff; }
+  .answer-box {
+    background: #eaf2ff;
+    border: 1px solid #9fc0f0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 18px;
+    font-weight: 600;
+    color: #0047b3;
+  }
+  .exam-tip {
+    background: #fffbe6;
+    border: 1px solid #ffe08a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: #6b5200;
+  }
+  .note { font-size: 0.85rem; color: #3a5a8a; font-style: italic; margin-top: 10px; }
+  .highlight { background: #d6e6ff; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Q9. Magnetic Disks & RAID Levels (5 Marks)</h1>
+
+  <h2>1. Role of Magnetic Disks</h2>
+  <ul>
+    <li>Provide <strong>large-capacity, non-volatile, low-cost</strong> secondary storage.</li>
+    <li>Used for storing programs, files, and data that do not fit in main memory.</li>
+    <li>Access is mechanical, so it is much slower than semiconductor memory.</li>
+  </ul>
+
+  <h2>2. Physical Structure</h2>
+  <div class="diagram-box">
+         ┌──────────────┐
+         │   Spindle    │  ← rotates all platters together
+         └──────┬───────┘
+     ┌──────────┼──────────┐
+     │  Platter │  Platter │  (magnetic film on each surface)
+     └──────────┼──────────┘
+                │
+        Read/Write Head (one per surface, moves radially)
+  </div>
+  <ul>
+    <li><strong>Platters:</strong> Rotating disks with a magnetic film on each surface.</li>
+    <li><strong>Read/Write Head:</strong> One per surface; moves radially to the required track.</li>
+    <li><strong>Tracks:</strong> Concentric circles on each surface.</li>
+    <li><strong>Sectors:</strong> Tracks are divided into sectors (typically 512 bytes of data).</li>
+    <li><strong>Cylinder:</strong> The set of corresponding tracks on all surfaces.</li>
+    <li><strong>Access specification:</strong> Surface, Track, Sector.</li>
+  </ul>
+
+  <h2>3. Performance Parameters</h2>
+  <h3>(a) Seek Time</h3>
+  <p>Time to move the read/write heads to the required track. Typically <strong>5–8 ms</strong>.</p>
+
+  <h3>(b) Rotational Latency</h3>
+  <p>Time waiting for the desired sector to rotate under the head. Average latency ≈ half a rotation:</p>
+  <div class="formula">
+T_latency = ½ × T_rotation
+  </div>
+
+  <h3>(c) Disk Access Time</h3>
+  <div class="formula">
+T_access = T_seek + T_rotational_latency
+  </div>
+  <p>For small transfers, access time is often much larger than the actual data-transfer time.</p>
+
+  <h2>4. RAID Levels</h2>
+
+  <h3>RAID 0 — Striping</h3>
+  <ul>
+    <li>Data is divided into strips and distributed across multiple disks.</li>
+    <li><strong>Goal:</strong> Higher performance (parallel transfer).</li>
+    <li><strong>Reliability:</strong> None — failure of one disk loses the entire array's data.</li>
+  </ul>
+
+  <h3>RAID 1 — Mirroring</h3>
+  <ul>
+    <li>Every logical strip is duplicated on a mirror disk.</li>
+    <li><strong>Goal:</strong> High reliability.</li>
+    <li><strong>Cost:</strong> 100% storage overhead (need 2N disks for N disks of data).</li>
+    <li>Recovery is simple: copy the surviving disk.</li>
+  </ul>
+
+  <h3>RAID 5 — Distributed Parity</h3>
+  <ul>
+    <li>Data and parity strips are distributed across all disks (no dedicated parity disk).</li>
+    <li><strong>Goal:</strong> Balanced performance and reliability.</li>
+    <li>Can recover from <strong>one</strong> disk failure using XOR parity.</li>
+    <li>Avoids the parity-disk bottleneck of RAID 4.</li>
+  </ul>
+
+  <h2>5. RAID Comparison Table</h2>
+  <table>
+    <tr>
+      <th>Level</th>
+      <th>Main Idea</th>
+      <th>Goal</th>
+      <th>Fault Tolerance</th>
+    </tr>
+    <tr>
+      <td><strong>RAID 0</strong></td>
+      <td>Striping</td>
+      <td>Performance</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td><strong>RAID 1</strong></td>
+      <td>Mirroring</td>
+      <td>Reliability</td>
+      <td>1 disk</td>
+    </tr>
+    <tr>
+      <td><strong>RAID 5</strong></td>
+      <td>Distributed parity</td>
+      <td>Both (balanced)</td>
+      <td>1 disk</td>
+    </tr>
+  </table>
+
+  <div class="answer-box">
+    ✅ Summary: Magnetic disks provide large, non-volatile storage; their access time is dominated by seek time and rotational latency. RAID combines multiple disks to improve performance (RAID 0), reliability (RAID 1), or both (RAID 5).
+  </div>
+
+  <div class="exam-tip">
+    <strong>Exam Tip:</strong> For the disk structure, draw a simple platter with tracks and sectors, and label seek time and rotational latency. For RAID, the comparison table alone can fetch most of the marks.
+  </div>
+
+  <p class="note">Reference: M3.pdf, Pages 62–68 — "Magnetic Hard Disk", "Disk Access Time", and "RAID".</p>
+</div>
+
+</body>
+</html>
