@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5: Pipelining & Parallel Processors - Exam Q&A</title>
+<style>
+  :root {
+    --primary: #0047b3;
+    --primary-light: #e6f0ff;
+    --primary-hover: #003580;
+    --bg: #f0f6ff;
+    --text: #1a2a4a;
+    --border: #c8dcff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  /* Sidebar Navigation */
+  .sidebar {
+    width: 280px;
+    background: #ffffff;
+    border-right: 1px solid var(--border);
+    padding: 24px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar h2 {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 16px;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 8px;
+  }
+  .sidebar a {
+    display: block;
+    padding: 10px 12px;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .sidebar a:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  /* Main Content */
+  .main-content {
+    margin-left: 280px;
+    padding: 32px 48px;
+    flex: 1;
+    max-width: 1000px;
+  }
+  .question-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 14px rgba(0, 80, 200, 0.05);
+    scroll-margin-top: 20px;
+  }
+  h1 {
+    font-size: 1.4rem;
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+  h2 {
+    font-size: 1.1rem;
+    color: #0059d6;
+    margin: 20px 0 8px 0;
+  }
+  h3 {
+    font-size: 1rem;
+    color: var(--primary);
+    margin: 14px 0 6px 0;
+  }
+  p { margin-bottom: 10px; }
+  ul { margin: 8px 0 12px 22px; }
+  li { margin-bottom: 6px; }
+  
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.92rem;
+  }
+  th {
+    background: var(--primary);
+    color: #ffffff;
+    padding: 10px 12px;
+    text-align: left;
+    border: 1px solid var(--primary-hover);
+  }
+  td {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f5f9ff; }
+  
+  /* Special Boxes */
+  .formula {
+    background: var(--primary-light);
+    border-left: 5px solid var(--primary);
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    white-space: pre-wrap;
+  }
+  .diagram-box {
+    background: #f5f9ff;
+    border: 1px dashed #7aa7e8;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 14px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    white-space: pre;
+    overflow-x: auto;
+    color: #003580;
+  }
+  .answer-box {
+    background: var(--primary-light);
+    border: 1px solid #9fc0f0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 18px;
+    font-weight: 600;
+    color: var(--primary);
+  }
+  .exam-tip {
+    background: #fffbe6;
+    border: 1px solid #ffe08a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: #6b5200;
+  }
+  .highlight { background: #d6e6ff; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+
+  @media (max-width: 768px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); }
+    .main-content { margin-left: 0; padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR NAVIGATION -->
+<div class="sidebar">
+  <h2>Module 5 Topics</h2>
+  <a href="#q1">Q1: Pipelining Basics & Speedup</a>
+  <a href="#q2">Q2: Data Hazards & Forwarding</a>
+  <a href="#q3">Q3: Control Hazards & Branching</a>
+  <a href="#q4">Q4: Flynn's Taxonomy</a>
+  <a href="#q5">Q5: Multiprocessors & UMA/NUMA</a>
+  <a href="#q6">Q6: Cache Coherence & Multicore</a>
+  <a href="#q7">Q7: GPU Architecture</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+  <!-- Q1 -->
+  <div class="question-card" id="q1">
+    <h1>Q1. Pipelining Basics, Speedup, and Hazards (Numerical & Conceptual)</h1>
+    
+    <h2>1. Basic Concept</h2>
+    <p>Pipelining overlaps the execution of multiple instructions by dividing the instruction cycle into distinct stages (e.g., Fetch, Decode, Execute, Write-back). It <strong>increases throughput</strong> (instructions completed per unit time) but does <strong>not</strong> reduce latency (time for a single instruction).</p>
+
+    <h2>2. Speedup Formula</h2>
+    <div class="formula">
+      Non-pipelined time: T_n = n × t_n
+      Pipelined time:     T_p = [k + (n - 1)] × t_p
+      Speedup (S) = T_n / T_p
+      Ideal Speedup (for large n) ≈ k (number of stages)
+    </div>
+
+    <h2>3. Numerical Example (from your papers)</h2>
+    <p><strong>Q:</strong> A k-stage pipeline where each stage requires <em>ts</em> ns, and a non-pipelined processor executes one task in <em>tpp</em> ns. Derive the speedup expression and state the ideal speedup.</p>
+    <ul>
+      <li><strong>Total time for n tasks (pipelined):</strong> \(T_p = (k + n - 1) \times t_s\)</li>
+      <li><strong>Total time for n tasks (non-pipelined):</strong> \(T_n = n \times t_{pp}\)</li>
+      <li><strong>Speedup:</strong> \(S = \frac{n \times t_{pp}}{(k + n - 1) \times t_s}\)</li>
+      <li><strong>Ideal speedup (as n → ∞):</strong> If \(t_{pp} = k \times t_s\), then \(S \approx k\).</li>
+    </ul>
+    <p><strong>Practical factors preventing ideal performance:</strong> Pipeline hazards (structural, data, control), stage imbalance, and pipeline fill/drain time.</p>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-card" id="q2">
+    <h1>Q2. Data Hazards, Operand Forwarding & Side Effects</h1>
+
+    <h2>1. What is a Data Hazard?</h2>
+    <p>A data hazard occurs when an instruction depends on the result of a previous instruction that has not yet completed its execution. The most common is <strong>RAW (Read-After-Write)</strong>.</p>
+
+    <h2>2. Hazard Example & Solution</h2>
+    <p><strong>Given Sequence:</strong><br>
+    I1: R1 ← R2 + R3<br>
+    I2: R4 ← R1 + R5<br>
+    I3: R6 ← R1 + R7</p>
+    <ul>
+      <li><strong>Hazard Identified:</strong> I2 and I3 both depend on R1 produced by I1. This is a <strong>RAW hazard</strong>.</li>
+      <li><strong>Solution 1: Operand Forwarding (Bypassing)</strong> — The result from I1's ALU output is forwarded directly to I2 and I3's ALU inputs without waiting for the write-back stage.</li>
+      <li><strong>Solution 2: Stalling</strong> — If forwarding hardware is not available, the pipeline must insert bubbles (stall) until R1 is written back.</li>
+    </ul>
+
+    <h2>3. Side Effects</h2>
+    <p>A side effect occurs when an instruction changes a register or flag other than its explicitly named destination.</p>
+    <ul>
+      <li><strong>Condition Code Flags:</strong> e.g., `ADD` modifies the Carry Flag, which might be used by a subsequent `ADDC`.</li>
+      <li><strong>Autoincrement/Autodecrement:</strong> e.g., `LOAD R1, (R2)+` implicitly modifies R2.</li>
+    </ul>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-card" id="q3">
+    <h1>Q3. Control Hazards, Branch Prediction & Delayed Branching</h1>
+
+    <h2>1. What is a Control Hazard?</h2>
+    <p>Occurs when a branch or jump instruction changes the program counter. The pipeline has already fetched sequential instructions (wrong path), which must be flushed if the branch is taken. This wastes cycles called the <strong>branch penalty</strong>.</p>
+
+    <h2>2. Solutions</h2>
+    <ul>
+      <li><strong>Instruction Queue (Prefetching):</strong> The fetch unit continuously fills a queue. Even if a branch causes a stall, the pipeline can draw from the queue, minimizing the visible penalty.</li>
+      <li><strong>Delayed Branching:</strong> The compiler places a useful instruction in the <strong>delay slot</strong> (immediately after the branch). This instruction is always executed, regardless of whether the branch is taken or not.</li>
+      <li><strong>Static Branch Prediction:</strong> Simple default (e.g., "always assume not taken"), or compiler inserts a prediction bit.</li>
+      <li><strong>Dynamic Branch Prediction:</strong> Hardware tracks history using a <strong>1-bit predictor</strong> (flips on misprediction) or <strong>2-bit predictor</strong> (requires two mispredictions to flip state; more stable).</li>
+    </ul>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-card" id="q4">
+    <h1>Q4. Flynn's Taxonomy (SISD, SIMD, MISD, MIMD)</h1>
+
+    <p>Classifies parallel architectures based on Instruction Streams and Data Streams.</p>
+
+    <table>
+      <tr>
+        <th>Class</th>
+        <th>Instruction Stream</th>
+        <th>Data Stream</th>
+        <th>Typical Organization</th>
+      </tr>
+      <tr>
+        <td><strong>SISD</strong></td>
+        <td>Single</td>
+        <td>Single</td>
+        <td>Uniprocessor (von Neumann).</td>
+      </tr>
+      <tr>
+        <td><strong>SIMD</strong></td>
+        <td>Single</td>
+        <td>Multiple</td>
+        <td>Vector/Array processors (lockstep execution).</td>
+      </tr>
+      <tr>
+        <td><strong>MISD</strong></td>
+        <td>Multiple</td>
+        <td>Single</td>
+        <td>Theoretical only (no commercial implementation).</td>
+      </tr>
+      <tr>
+        <td><strong>MIMD</strong></td>
+        <td>Multiple</td>
+        <td>Multiple</td>
+        <td>SMP, Multi-core, Clusters (most common).</td>
+      </tr>
+    </table>
+    
+    <p><strong>Data Flow:</strong> In SIMD, one control unit broadcasts the same instruction to multiple processing elements, each working on different data. In MIMD, each processor has its own control unit, executing different instructions on different data.</p>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question-card" id="q5">
+    <h1>Q5. Multiprocessors: SMP, UMA vs. NUMA, & Amdahl's Law</h1>
+
+    <h2>1. Symmetric Multiprocessor (SMP)</h2>
+    <ul>
+      <li>Two or more comparable processors sharing main memory and I/O.</li>
+      <li>"Symmetric" means all processors are equal (no master/slave).</li>
+      <li>Managed by a single integrated OS.</li>
+      <li><strong>Bottleneck:</strong> The shared bus becomes a bottleneck as processors are added.</li>
+    </ul>
+
+    <h2>2. UMA vs. NUMA</h2>
+    <ul>
+      <li><strong>UMA (Uniform Memory Access):</strong> All processors access a single shared memory with equal latency. (e.g., standard SMP).</li>
+      <li><strong>NUMA (Non-Uniform Memory Access):</strong> Memory is distributed. A processor accesses its <strong>local memory</strong> quickly, but <strong>remote memory</strong> (another processor's memory) takes longer. Scales better than UMA.</li>
+    </ul>
+
+    <h2>3. Amdahl's Law</h2>
+    <p>The speedup of a program is limited by its serial fraction.</p>
+    <div class="formula">
+      Speedup S(N) = 1 / [(1 - f) + (f / N)]
+      Where f = parallelizable fraction, N = number of cores.
+      Max Speedup = 1 / (1 - f)
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="question-card" id="q6">
+    <h1>Q6. Cache Coherence & Multicore Organization</h1>
+
+    <h2>1. The Cache Coherence Problem</h2>
+    <p>In a multicore system, each core has a private cache. If Core 1 modifies a shared variable in its cache, Core 2's cache still holds the old (stale) value. All processors must observe a consistent value for shared memory.</p>
+
+    <h2>2. Solutions</h2>
+    <ul>
+      <li><strong>Snoopy Protocol:</strong> Caches monitor (snoop) the shared bus. If a write occurs, other caches invalidate or update their copies (e.g., MESI protocol). Good for small bus-based systems.</li>
+      <li><strong>Directory Protocol:</strong> A central directory tracks which caches hold which blocks. Targeted messages are sent to only those caches. Scales better for large systems.</li>
+    </ul>
+
+    <h2>3. Multicore Cache Organization</h2>
+    <ul>
+      <li><strong>Private L1:</strong> Always private to each core.</li>
+      <li><strong>L2/L3:</strong> Can be private or shared. A <strong>shared L3</strong> allows cores to reuse data and dynamically allocate cache capacity, but requires coherence management.</li>
+    </ul>
+  </div>
+
+  <!-- Q7 -->
+  <div class="question-card" id="q7">
+    <h1>Q7. Graphics Processing Unit (GPU) Architecture</h1>
+
+    <h2>1. CPU vs. GPU Structure</h2>
+    <ul>
+      <li><strong>CPU:</strong> Latency-oriented. Large control unit (for complex branching), large cache, few powerful ALUs.</li>
+      <li><strong>GPU:</strong> Throughput-oriented. Minimal control unit, small cache, <strong>hundreds/thousands of simple ALUs</strong>.</li>
+    </ul>
+
+    <h2>2. GPU Architecture Fundamentals</h2>
+    <div class="diagram-box">
+[SM]  [SM]  [SM]  [SM]  ← Streaming Multiprocessors (each has ALUs, scheduler, L1 cache)
+  \    |    |    /
+   [ Shared L2 Cache ]
+          |
+     [ High-Bandwidth DRAM ]
+    </div>
+    <ul>
+      <li><strong>Streaming Multiprocessors (SMs):</strong> The building blocks of the GPU. Each executes instructions and contains multiple ALUs and a private L1 cache.</li>
+      <li><strong>L2 Cache:</strong> Shared by all SMs.</li>
+      <li><strong>DRAM:</strong> Main GPU memory. High bandwidth.</li>
+    </ul>
+    <p><strong>Latency Hiding:</strong> GPUs hide memory latency by switching to other threads while waiting for data, rather than trying to reduce the latency.</p>
+
+    <h2>3. Discrete vs. Integrated</h2>
+    <ul>
+      <li><strong>Discrete:</strong> Separate chip, dedicated VRAM, high performance, high power, PCIe overhead.</li>
+      <li><strong>Integrated:</strong> Same chip as CPU, shares DRAM, lower performance, lower power, no PCIe overhead.</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

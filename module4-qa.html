@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4: I/O Organization - Exam Q&A</title>
+<style>
+  :root {
+    --primary: #0047b3;
+    --primary-light: #e6f0ff;
+    --primary-hover: #003580;
+    --bg: #f0f6ff;
+    --text: #1a2a4a;
+    --border: #c8dcff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  /* Sidebar Navigation */
+  .sidebar {
+    width: 280px;
+    background: #ffffff;
+    border-right: 1px solid var(--border);
+    padding: 24px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar h2 {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 16px;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 8px;
+  }
+  .sidebar a {
+    display: block;
+    padding: 10px 12px;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .sidebar a:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  /* Main Content */
+  .main-content {
+    margin-left: 280px;
+    padding: 32px 48px;
+    flex: 1;
+    max-width: 1000px;
+  }
+  .question-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 14px rgba(0, 80, 200, 0.05);
+    scroll-margin-top: 20px;
+  }
+  h1 {
+    font-size: 1.4rem;
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+  h2 {
+    font-size: 1.1rem;
+    color: #0059d6;
+    margin: 20px 0 8px 0;
+  }
+  h3 {
+    font-size: 1rem;
+    color: var(--primary);
+    margin: 14px 0 6px 0;
+  }
+  p { margin-bottom: 10px; }
+  ul { margin: 8px 0 12px 22px; }
+  li { margin-bottom: 6px; }
+  
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.92rem;
+  }
+  th {
+    background: var(--primary);
+    color: #ffffff;
+    padding: 10px 12px;
+    text-align: left;
+    border: 1px solid var(--primary-hover);
+  }
+  td {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f5f9ff; }
+  
+  /* Special Boxes */
+  .formula {
+    background: var(--primary-light);
+    border-left: 5px solid var(--primary);
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    white-space: pre-wrap;
+  }
+  .diagram-box {
+    background: #f5f9ff;
+    border: 1px dashed #7aa7e8;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 14px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    white-space: pre;
+    overflow-x: auto;
+    color: #003580;
+  }
+  .answer-box {
+    background: var(--primary-light);
+    border: 1px solid #9fc0f0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 18px;
+    font-weight: 600;
+    color: var(--primary);
+  }
+  .exam-tip {
+    background: #fffbe6;
+    border: 1px solid #ffe08a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: #6b5200;
+  }
+  .highlight { background: #d6e6ff; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+
+  @media (max-width: 768px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); }
+    .main-content { margin-left: 0; padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR NAVIGATION -->
+<div class="sidebar">
+  <h2>Module 4 Topics</h2>
+  <a href="#q1">Q1: System Bus & Bottleneck</a>
+  <a href="#q2">Q2: Asynchronous Handshake</a>
+  <a href="#q3">Q3: I/O Methods Comparison</a>
+  <a href="#q4">Q4: Interrupts & Multiple I/O</a>
+  <a href="#q5">Q5: UART & USART</a>
+  <a href="#q6">Q6: RAID Techniques</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+  <!-- Q1 -->
+  <div class="question-card" id="q1">
+    <h1>Q1. System Bus Components & Communication Bottleneck</h1>
+    
+    <h2>1. What is a System Bus?</h2>
+    <p>A system bus is a shared communication pathway (a collection of parallel electrical wires) connecting the major components of a computer: the Processor (CPU), Main Memory, and I/O Devices.</p>
+    
+    <h2>2. Main Components (Bus Lines)</h2>
+    <ul>
+      <li><strong>Address Lines:</strong> Identify the source or destination (e.g., memory address).</li>
+      <li><strong>Data Lines:</strong> Carry the actual information (instruction or data word) being transferred.</li>
+      <li><strong>Control Lines:</strong> Specify the type of operation (Read, Write, Interrupt) and synchronize the transfer.</li>
+    </ul>
+
+    <h2>3. Why is a Bus a Communication Bottleneck?</h2>
+    <ul>
+      <li>A bus is a <strong>shared resource</strong>. Only one bus master (e.g., CPU or DMA) can control it at a time.</li>
+      <li>As more components are added, they compete for bus access (<strong>bus contention</strong>).</li>
+      <li>If the bus bandwidth is insufficient, a fast CPU will have to wait for the slow bus to transfer data, slowing down the overall system.</li>
+    </ul>
+
+    <div class="exam-tip">
+      <strong>Exam Tip:</strong> Mention "Bus Contention" and "Bus Bandwidth" to score full marks on the bottleneck part.
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-card" id="q2">
+    <h1>Q2. Asynchronous Handshake Protocol</h1>
+
+    <h2>1. Role of Master-Ready and Slave-Ready Signals</h2>
+    <p>In an asynchronous bus (no common clock), devices use these signals to coordinate data transfers:</p>
+    <ul>
+      <li><strong>Master-ready:</strong> Asserted by the Master. Indicates that the address, command, and (if writing) data are valid on the bus.</li>
+      <li><strong>Slave-ready:</strong> Asserted by the Slave. Indicates that the slave has completed the requested operation and data is ready (or has been received).</li>
+    </ul>
+
+    <h2>2. Sequence of Events (Read Operation)</h2>
+    <div class="diagram-box">
+Time →
+Master:   [Address/Command]----[Master-Ready]------------------[Remove Signals]
+Slave:                          [Slave-Ready]--[Data]----------[Remove Signals]
+    </div>
+    <ul>
+      <li><strong>t0:</strong> Master places address and command on the bus.</li>
+      <li><strong>t1:</strong> Master asserts <strong>Master-ready</strong>. Signal reaches the slave.</li>
+      <li><strong>t2:</strong> Slave decodes address, places data on the bus, and asserts <strong>Slave-ready</strong>.</li>
+      <li><strong>t3:</strong> Master receives Slave-ready, waits for setup time, and strobes (captures) the data.</li>
+      <li><strong>t4:</strong> Master removes address and command (de-asserts Master-ready).</li>
+      <li><strong>t5:</strong> Slave sees Master-ready go low, removes data and de-asserts Slave-ready.</li>
+    </ul>
+
+    <div class="exam-tip">
+      <strong>Exam Tip:</strong> Draw the simple timing diagram (as shown above). It proves you understand the handshake sequence.
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-card" id="q3">
+    <h1>Q3. Programmed I/O vs. Interrupt-Driven I/O vs. DMA</h1>
+
+    <table>
+      <tr>
+        <th>Feature</th>
+        <th>Programmed I/O (Polling)</th>
+        <th>Interrupt-Driven I/O</th>
+        <th>DMA (Direct Memory Access)</th>
+      </tr>
+      <tr>
+        <td><strong>Working Principle</strong></td>
+        <td>CPU repeatedly checks device status (polling).</td>
+        <td>Device alerts CPU via hardware interrupt when ready.</td>
+        <td>DMA controller transfers data directly between I/O and memory.</td>
+      </tr>
+      <tr>
+        <td><strong>CPU Involvement</strong></td>
+        <td>Very High (CPU waits and checks constantly).</td>
+        <td>Medium (CPU is interrupted only when data is ready).</td>
+        <td>Very Low (CPU only initializes and is notified at the end).</td>
+      </tr>
+      <tr>
+        <td><strong>Data Transfer Speed</strong></td>
+        <td>Slowest</td>
+        <td>Moderate</td>
+        <td>Fastest (block transfer).</td>
+      </tr>
+      <tr>
+        <td><strong>System Efficiency</strong></td>
+        <td>Poor (wastes CPU cycles).</td>
+        <td>Good (CPU does useful work while waiting).</td>
+        <td>Excellent (CPU is free; data moves in blocks).</td>
+      </tr>
+      <tr>
+        <td><strong>Example</strong></td>
+        <td>Simple keyboard checking.</td>
+        <td>Keyboard or mouse click.</td>
+        <td>Hard disk block transfer.</td>
+      </tr>
+    </table>
+
+    <div class="exam-tip">
+      <strong>Exam Tip:</strong> The comparison table is the best way to answer this. It highlights all the requested parameters clearly.
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-card" id="q4">
+    <h1>Q4. Interrupts & Handling Multiple Devices</h1>
+
+    <h2>1. What is an Interrupt?</h2>
+    <p>A hardware signal generated by an I/O device to alert the processor that it requires service.</p>
+
+    <h2>2. Why Interrupts over Programmed I/O?</h2>
+    <p>In Programmed I/O, the CPU wastes time in a polling loop checking device status. Interrupts allow the CPU to execute useful instructions and only service the I/O device when it is actually ready.</p>
+
+    <h2>3. What Happens When an Interrupt Occurs?</h2>
+    <ul>
+      <li>The CPU finishes the current instruction.</li>
+      <li>It <strong>saves its state</strong> (Program Counter, Processor Status) on the stack.</li>
+      <li>It jumps to the <strong>Interrupt Service Routine (ISR)</strong>.</li>
+      <li>After the ISR finishes, the CPU restores its state and resumes the original program.</li>
+    </ul>
+
+    <h2>4. Handling Multiple Interrupts</h2>
+    <ul>
+      <li><strong>Priority:</strong> High-priority devices are serviced before low-priority ones.</li>
+      <li><strong>Interrupt Nesting:</strong> A high-priority interrupt can interrupt the ISR of a low-priority device.</li>
+      <li><strong>Vectored Interrupts:</strong> The device sends a code (vector) so the CPU knows exactly which ISR to execute (no need to poll).</li>
+      <li><strong>Daisy Chaining:</strong> The INTA (acknowledge) signal passes through devices physically closest to the CPU first. The closest device has the highest priority.</li>
+    </ul>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question-card" id="q5">
+    <h1>Q5. UART and USART</h1>
+
+    <h2>1. Definitions</h2>
+    <ul>
+      <li><strong>UART (Universal Asynchronous Receiver/Transmitter):</strong> A standard serial interface for low-speed devices. It performs serial-to-parallel and parallel-to-serial conversion using asynchronous start-stop bits.</li>
+      <li><strong>USART (Universal Synchronous/Asynchronous Receiver/Transmitter):</strong> Supports both synchronous and asynchronous serial communication.</li>
+    </ul>
+
+    <h2>2. Working Principle of a UART</h2>
+    <div class="diagram-box">
+CPU Data Bus (Parallel) ────> [DATAOUT] ──> [Shift Register] ──> (Serial TX)
+CPU Data Bus (Parallel) <──── [DATAIN]  <── [Shift Register] <── (Serial RX)
+    </div>
+    <ul>
+      <li><strong>Transmitter:</strong> CPU writes a byte (parallel) to the transmitter register. It is loaded into a shift register and shifted out one bit at a time (serial). Start/Stop bits are added.</li>
+      <li><strong>Receiver:</strong> Data arrives serially into a shift register. Once 8 bits are collected, the byte is moved to the receiver register for the CPU to read.</li>
+    </ul>
+
+    <h2>3. How USART Maintains Data Integrity</h2>
+    <p>In <strong>synchronous mode</strong>, the USART uses a continuous clock signal to stay in perfect sync with the receiver, preventing bits from being misread over long distances. It also uses error-checking (parity) and can use special synchronization characters (sync bytes) to ensure the receiver knows exactly where data blocks begin and end.</p>
+  </div>
+
+  <!-- Q6 -->
+  <div class="question-card" id="q6">
+    <h1>Q6. RAID Techniques</h1>
+
+    <h2>1. What is RAID?</h2>
+    <p><strong>Redundant Array of Independent Disks.</strong> A system that uses multiple physical disks, viewed as a single logical disk, to improve performance, reliability, and capacity.</p>
+
+    <h2>2. RAID Levels</h2>
+
+    <h3>RAID 0 — Striping (Performance)</h3>
+    <ul>
+      <li>Data is divided into strips and distributed across all disks in parallel.</li>
+      <li><strong>Performance:</strong> Excellent (parallel transfer).</li>
+      <li><strong>Reliability:</strong> None. If one disk fails, all data is lost.</li>
+    </ul>
+
+    <h3>RAID 1 — Mirroring (Reliability)</h3>
+    <ul>
+      <li>Every logical strip is duplicated on a mirror disk.</li>
+      <li><strong>Performance:</strong> Good read performance (can read from either copy).</li>
+      <li><strong>Reliability:</strong> Excellent (survives 1 disk failure). Cost is high (100% storage overhead).</li>
+    </ul>
+
+    <h3>RAID 5 — Distributed Parity (Balanced)</h3>
+    <ul>
+      <li>Uses block-level striping and distributes parity across all disks (no single parity bottleneck).</li>
+      <li><strong>Performance:</strong> Good for reads, moderate for writes (requires parity calculation).</li>
+      <li><strong>Reliability:</strong> Can survive 1 disk failure (data is rebuilt using XOR parity).</li>
+    </ul>
+
+    <h3>RAID 6 — Dual Distributed Parity (High Fault Tolerance)</h3>
+    <ul>
+      <li>Uses two independent parity calculations (P and Q) distributed across disks.</li>
+      <li><strong>Performance:</strong> Slower writes (double parity calculation).</li>
+      <li><strong>Reliability:</strong> Can survive <strong>two</strong> simultaneous disk failures. Used for mission-critical data.</li>
+    </ul>
+
+    <h2>3. Summary Table</h2>
+    <table>
+      <tr>
+        <th>Level</th>
+        <th>Organization</th>
+        <th>Redundancy</th>
+        <th>Best For</th>
+      </tr>
+      <tr><td>RAID 0</td><td>Striping</td><td>None</td><td>Speed (non-critical)</td></tr>
+      <tr><td>RAID 1</td><td>Mirroring</td><td>Duplicate</td><td>Safety (critical files)</td></tr>
+      <tr><td>RAID 5</td><td>Distributed Parity</td><td>Single Parity</td><td>Balanced performance/reliability</td></tr>
+      <tr><td>RAID 6</td><td>Dual Distributed Parity</td><td>Dual Parity</td><td>Extreme reliability</td></tr>
+    </table>
+  </div>
+
+</div>
+
+</body>
+</html>
